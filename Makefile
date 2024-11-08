@@ -6,9 +6,11 @@ update-helm-dependencies:
 
 install-helm-chart:
 	helm install geoserver ./geoserver
+uninstall-helm-chart:
+	helm uninstall geoserver
 
 update-helm-configuration:
-	helm upgrade --install geoserver ./geoserver --values ./geoserver/values.yaml
+	helm upgrade geoserver ./geoserver -f ./geoserver/values.yaml
 
 delete-cluster:
 	k3d cluster delete geoserver-cluster
