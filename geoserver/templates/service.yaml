@@ -12,5 +12,9 @@ spec:
       protocol: TCP
       name: http
       nodePort: {{ .Values.service.nodePort }}
+  sessionAffinity: {{ .Values.service.sessionAffinity }}
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: {{ .Values.service.sessionAffinityConfig.clientIP.timeoutSeconds }}
   selector:
     {{- include "geoserver.selectorLabels" . | nindent 4 }}

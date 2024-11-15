@@ -53,6 +53,8 @@ spec:
           volumeMounts:
             - name: gs-datadir
               mountPath: /var/geoserver/datadir
+            - name: gs-shared-datadir
+              mountPath: /var/geoserver/datadir
             - name: gs-memdumps
               mountPath: $(GEOSERVER_HEAP_DUMP_DIR)
             - name: gs-audits
@@ -207,6 +209,8 @@ spec:
               readOnly: true
             - name: gs-datadir
               mountPath: /var/geoserver/datadir
+            - name: gs-shared-datadir
+              mountPath: /var/geoserver/datadir
             - name: gs-memdumps
               mountPath: /var/geoserver/memory_dumps
             - name: gs-audits
@@ -259,6 +263,11 @@ spec:
       - name: gs-datadir
         persistentVolumeClaim:
           claimName: {{ include "geoserver.fullname" . }}-datadir
+      {{- end }}
+      {{- if .Values.persistence.sharedDataDir }}
+      - name: gs-shared-datadir
+        persistentVolumeClaim:
+          claimName: {{ include "geoserver.fullname" . }}-shared-datadir
       {{- end }}
       {{- if .Values.persistence.memdumps }}
       - name: gs-memdumps

@@ -41,6 +41,10 @@ service:
   port: 80
   targetPort: 8080
   nodePort: 30000
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
 
 ingress:
   enabled: true
@@ -84,6 +88,10 @@ tolerations: []
 affinity: {}
 
 persistence:
+  sharedDataDir:
+    accessModes: ReadWriteMany
+    size: 5Gi
+    storageClass: ""
   audits:
     accessModes: ReadWriteOnce
     size: 1Gi
