@@ -88,10 +88,6 @@ tolerations: []
 affinity: {}
 
 persistence:
-  sharedDataDir:
-    accessModes: ReadWriteMany
-    size: 5Gi
-    storageClass: ""
   audits:
     accessModes: ReadWriteOnce
     size: 1Gi
