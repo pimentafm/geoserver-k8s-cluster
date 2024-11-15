@@ -131,7 +131,8 @@ geoserver:
   #   https://sourceforge.net/projects/geoserver/files/GeoServer/2.26.0/extensions/geoserver-2.26.0-control-flow-plugin.zip"
   # to enable audit logging once the pod is deployed go inside the geoserver pod and configure it in the datadir according to doc:
   # https://docs.geoserver.org/latest/en/user/extensions/monitoring/audit.html
-  plugins: ""
+  plugins: "https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-sec-oauth2-openid-connect-plugin.zip \
+            https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wps-plugin.zip"
   geoserver_proxy_base_url: "http://localhost:8080/geoserver"
   geoserver_log_location: "/var/geoserver/logs/$(POD_HOSTNAME).log"
   geoserver_audit_path: "/var/geoserver/audits"
