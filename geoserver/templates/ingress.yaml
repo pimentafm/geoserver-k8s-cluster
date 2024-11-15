@@ -18,13 +18,8 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "geoserver.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-name: "route"
-    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
-  {{- end }}
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
 spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.ingress.className }}

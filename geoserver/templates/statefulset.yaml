@@ -81,6 +81,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             {{- if .Values.geoserver.plugins }}
             - name: PLUGIN_DYNAMIC_URLS
               value: "{{ .Values.geoserver.plugins }}"

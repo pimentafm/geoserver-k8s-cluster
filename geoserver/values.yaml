@@ -51,6 +51,9 @@ ingress:
   className: ""
   annotations:
     traefik.ingress.kubernetes.io/service.sticky: "true"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
@@ -136,6 +139,10 @@ geoserver:
   # to enable audit logging once the pod is deployed go inside the geoserver pod and configure it in the datadir according to doc:
   # https://docs.geoserver.org/latest/en/user/extensions/monitoring/audit.html
   plugins: "https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-sec-oauth2-openid-connect-plugin.zip \
+            https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-csw-plugin.zip \
+            https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-monitor-plugin.zip \
+            https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-jms-cluster-plugin.zip \
+            https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-activeMQ-broker-plugin.zip \
             https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wps-plugin.zip"
   geoserver_proxy_base_url: "http://localhost:8080/geoserver"
   geoserver_log_location: "/var/geoserver/logs/$(POD_HOSTNAME).log"
