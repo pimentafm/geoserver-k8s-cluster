@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 3
+replicaCount: 2
 
 image:
   repository: geosolutionsit/geoserver
@@ -51,10 +51,16 @@ ingress:
   className: ""
   annotations:
     traefik.ingress.kubernetes.io/service.sticky: "true"
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-name: "JSESSIONID"
-    nginx.ingress.kubernetes.io/session-cookie-path: "/"
-    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.name: "JSESSIONID"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.path: "/geoserver"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "false"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.sameSite: "none"
+    # nginx.ingress.kubernetes.io/affinity-mode: "balanced"
+    # nginx.ingress.kubernetes.io/affinity: "cookie"
+    # nginx.ingress.kubernetes.io/affinity-canary-behavior: "sticky"
+    # nginx.ingress.kubernetes.io/session-cookie-name: "JSESSIONID"
+    # nginx.ingress.kubernetes.io/session-cookie-path: "/geoserver"
+    # nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
@@ -80,10 +86,10 @@ resources:
 
 autoscaling:
   enabled: true
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 90
+  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 
@@ -142,8 +148,6 @@ geoserver:
   plugins: "https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-sec-oauth2-openid-connect-plugin.zip \
             https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-csw-plugin.zip \
             https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-monitor-plugin.zip \
-            https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-jms-cluster-plugin.zip \
-            https://build.geoserver.org/geoserver/2.26.x/community-latest/geoserver-2.26-SNAPSHOT-activeMQ-broker-plugin.zip \
             https://build.geoserver.org/geoserver/2.26.x/ext-latest/geoserver-2.26-SNAPSHOT-wps-plugin.zip"
   geoserver_proxy_base_url: "http://localhost:8080/geoserver"
   geoserver_log_location: "/var/geoserver/logs/$(POD_HOSTNAME).log"
@@ -157,7 +161,7 @@ geoserver:
   geoserver_csrf_disabled: "true"
   geoserver_jai_ext_enabled: "true"
   geoserver_java_mem_xms: "256M"
-  geoserver_java_mem_xmx: "4G"
+  geoserver_java_mem_xmx: "2G"
   geoserver_cors_enabled: "false"
   geoserver_cors_allowed_methods: "GET,POST,PUT,HEAD,OPTIONS"
   geoserver_cors_allowed_origins: "*"
