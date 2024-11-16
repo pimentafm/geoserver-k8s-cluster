@@ -48,20 +48,18 @@ service:
 
 ingress:
   enabled: true
-  className: ""
+  className: "nginx"
   annotations:
-    traefik.ingress.kubernetes.io/service.sticky: "true"
-    traefik.ingress.kubernetes.io/service.sticky.cookie.name: "JSESSIONID"
-    traefik.ingress.kubernetes.io/service.sticky.cookie.path: "/geoserver"
-    traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "false"
-    traefik.ingress.kubernetes.io/service.sticky.cookie.sameSite: "none"
-    # nginx.ingress.kubernetes.io/affinity-mode: "balanced"
-    # nginx.ingress.kubernetes.io/affinity: "cookie"
-    # nginx.ingress.kubernetes.io/affinity-canary-behavior: "sticky"
-    # nginx.ingress.kubernetes.io/session-cookie-name: "JSESSIONID"
-    # nginx.ingress.kubernetes.io/session-cookie-path: "/geoserver"
-    # nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
-    # kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/affinity-mode: "balanced"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/affinity-canary-behavior: "sticky"
+    nginx.ingress.kubernetes.io/session-cookie-name: "JSESSIONID"
+    nginx.ingress.kubernetes.io/session-cookie-path: "/geoserver"
+    nginx.ingress.kubernetes.io/proxy-cookie-path: "/geoserver /"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+    kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: geoserver.local
