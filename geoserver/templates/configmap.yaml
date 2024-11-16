@@ -135,7 +135,7 @@ data:
         <!-- You should set jvmRoute to support load-balancing via AJP ie :
         <Engine name="Catalina" defaultHost="localhost" jvmRoute="jvm1">
         -->
-        <Engine name="Catalina" defaultHost="localhost" jvmRoute="geoserver">
+        <Engine name="Catalina" defaultHost="localhost">
     
           <!--For clustering, please take a look at documentation at:
               /docs/cluster-howto.html  (simple how to)
@@ -238,12 +238,10 @@ data:
                <param-value>http://localhost:8080/geoserver</param-value>
           </context-param>
 
-          <!--
           <context-param>
                <param-name>GEOSERVER_DATA_DIR</param-name>
-               <param-value>C:\eclipse\workspace\geoserver_trunk\cite\confCiteWFSPostGIS</param-value>
+               <param-value>/var/geoserver/datadir</param-value>
           </context-param>
-          -->
 
           <!-- pick up all spring application contexts -->
           <context-param>
@@ -347,8 +345,7 @@ data:
                </filter>
                -->
 
-          <!-- Uncomment following filter to enable CORS in Tomcat. Do not forget the second config block further down. -->
-          <!--    
+          <!-- Uncomment following filter to enable CORS in Tomcat. Do not forget the second config block further down. -->    
           <filter>
                <filter-name>cross-origin</filter-name>
                <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
@@ -365,7 +362,6 @@ data:
                <param-value>*</param-value>
                </init-param>
           </filter>
-          -->
 
           <!--
                THIS FILTER MAPPING MUST BE THE FIRST ONE, otherwise we end up with ruined chars in the input from the GUI
@@ -378,12 +374,10 @@ data:
           </filter-mapping>
 
           <!-- Uncomment following filter-mapping to enable CORS -->
-          <!--
           <filter-mapping>
                <filter-name>cross-origin</filter-name>
                <url-pattern>/*</url-pattern>
           </filter-mapping>
-          -->
 
           <filter-mapping>
                <filter-name>FlushSafeFilter</filter-name>
