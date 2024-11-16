@@ -81,10 +81,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
             {{- if .Values.geoserver.plugins }}
             - name: PLUGIN_DYNAMIC_URLS
               value: "{{ .Values.geoserver.plugins }}"
@@ -209,6 +205,10 @@ spec:
               mountPath: /usr/local/tomcat/conf/server.xml
               subPath: server.xml
               readOnly: true
+            - name: web-xml
+              mountPath: /usr/local/tomcat/webapps/geoserver/WEB-INF/web.xml
+              subPath: web.xml
+              readOnly: true
             - name: gs-datadir
               mountPath: /var/geoserver/datadir
             - name: gs-memdumps
@@ -292,10 +292,16 @@ spec:
           secretName: {{ include "geoserver.fullname" .}}-env-properties
       - name: server-xml
         configMap:
-          name: geoserver
+          name: geoserver-server-xml
           items:
             - key: server.xml
               path: server.xml
+      - name: web-xml
+        configMap:
+          name: geoserver-web-xml
+          items:
+            - key: web.xml
+              path: web.xml
       {{- if .Values.postgis.enabled }}
       - name: postgis-persistent
         persistentVolumeClaim:
